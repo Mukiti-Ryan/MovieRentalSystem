@@ -35,4 +35,92 @@ public class Film {
     public static int getFilmId() {
         return filmId;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public int getRentalDuration() {
+        return rentalDuration;
+    }
+
+    public void setRentalDuration(int rentalDuration) {
+        this.rentalDuration = rentalDuration;
+    }
+
+    public int getRentalRate() {
+        return rentalRate;
+    }
+
+    public void setRentalRate(int rentalRate) {
+        this.rentalRate = rentalRate;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getReplacementCost() {
+        return replacementCost;
+    }
+
+    public void setReplacementCost(int replacementCost) {
+        this.replacementCost = replacementCost;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public String getSpecialFeatures() {
+        return specialFeatures;
+    }
+
+    public void setSpecialFeatures(String specialFeatures) {
+        this.specialFeatures = specialFeatures;
+    }
+
+    public String getFullText() {
+        return fullText;
+    }
+
+    public void setFullText(String fullText) {
+        this.fullText = fullText;
+    }
 }

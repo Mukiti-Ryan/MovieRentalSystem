@@ -15,4 +15,20 @@ public class Category {
     public static int getCategoryId() {
         return categoryId;
     }
+
+    public String getNameOfCategory() {
+        return nameOfCategory;
+    }
+
+    public void setNameOfCategory(String nameOfCategory) {
+        this.nameOfCategory = nameOfCategory;
+    }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }

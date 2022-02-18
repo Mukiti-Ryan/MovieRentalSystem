@@ -15,4 +15,20 @@ public class Country {
     public static int getCountryId() {
         return countryId;
     }
+
+    public String getNameOfCountry() {
+        return nameOfCountry;
+    }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setNameOfCountry(String nameOfCountry) {
+        this.nameOfCountry = nameOfCountry;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }

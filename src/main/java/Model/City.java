@@ -17,4 +17,20 @@ public class City {
     public static int getCityId() {
         return cityId;
     }
+
+    public String getNameOfCity() {
+        return nameOfCity;
+    }
+
+    public void setNameOfCity(String nameOfCity) {
+        this.nameOfCity = nameOfCity;
+    }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }

@@ -12,4 +12,12 @@ public class FilmActor {
         this.actor_id = actor_id;
         this.lastUpdate = lastUpdate;
     }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }

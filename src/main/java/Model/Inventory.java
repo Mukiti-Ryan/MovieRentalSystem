@@ -15,4 +15,12 @@ public class Inventory {
     public static int getInventory_id() {
         return inventory_id;
     }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }

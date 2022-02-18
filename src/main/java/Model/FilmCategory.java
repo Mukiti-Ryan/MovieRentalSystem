@@ -12,4 +12,12 @@ public class FilmCategory {
         this.category_Id = Category.getCategoryId();
         this.lastUpdate = lastUpdate;
     }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }
