@@ -16,6 +16,10 @@ public class Country {
         return countryId;
     }
 
+    public static void setCountryId(int countryId) {
+        Country.countryId = countryId;
+    }
+
     public String getNameOfCountry() {
         return nameOfCountry;
     }

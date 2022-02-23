@@ -7,7 +7,6 @@ public class ConnectionDb {
         String url = "jdbc:mysql://192.168.64.2:3306/movierental";
         String user = "ecwork";
         String password = "pass.word.1";
-        System.out.println("Connection to the database is successful");
         return DriverManager.getConnection(url,user,password);
     }
 }

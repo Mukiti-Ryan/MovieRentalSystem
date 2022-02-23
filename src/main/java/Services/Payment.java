@@ -1,18 +1,12 @@
 package Services;
 
-import Model.Customer;
-import Model.Film;
-import Model.Staff;
-
 import java.sql.*;
-
-import static Connection.ConnectionDb.connect;
 
 public class Payment {
     private int customer_Id;
     private int staff_Id;
     private int rental_Id;
-    private static int paymentId;
+    private int paymentId;
     private int amount;
     private Timestamp paymentDate;
     private String filmTitle;
@@ -30,7 +24,7 @@ public class Payment {
     }
 
     public void setRental_Id(int rental_Id) {
-        this.rental_Id = Rental.getRentalId();
+        this.rental_Id = rental_Id;
     }
 
     public int getCustomer_Id() {
@@ -38,7 +32,7 @@ public class Payment {
     }
 
     public void setCustomer_Id(int customer_Id) {
-        this.customer_Id = Customer.getCustomerId();
+        this.customer_Id = customer_Id;
     }
 
     public int getStaff_Id() {
@@ -46,15 +40,15 @@ public class Payment {
     }
 
     public void setStaff_Id(int staff_Id) {
-        this.staff_Id = Staff.getStaffId();
+        this.staff_Id = staff_Id;
     }
 
-    public static int getPaymentId() {
+    public int getPaymentId() {
         return paymentId;
     }
 
-    public static void setPaymentId(int paymentId) {
-        Payment.paymentId = paymentId;
+    public void setPaymentId(int paymentId) {
+        this.paymentId = paymentId;
     }
 
     public int getAmount() {
@@ -71,53 +65,5 @@ public class Payment {
 
     public void setPaymentDate(Timestamp paymentDate) {
         this.paymentDate = paymentDate;
-    }
-
-    public static Payment extractPaymentFromResultSet(ResultSet rs) {
-        Payment payment = new Payment();
-        try {
-            payment.setRental_Id(rs.getInt("rental_Id"));
-            payment.setCustomer_Id(rs.getInt("customer_Id"));
-            payment.setStaff_Id(rs.getInt("staff_Id"));
-            payment.setAmount(rs.getInt("amount"));
-            payment.setPaymentDate(rs.getTimestamp("paymentDate"));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return payment;
-    }
-
-    public static Payment viewPaymentDetails() {
-        Payment payment = new Payment();
-        try{
-            Connection conn = connect();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM payment WHERE paymentId=?");
-            ps.setInt(1, Payment.paymentId);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return extractPaymentFromResultSet(rs);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return payment;
-    }
-
-    public int payFilm(int amount) {
-        if (!(filmTitle == Film.getTitle())) {
-            System.out.println("Oops... Film is not currently available.");
-            System.out.println("Kindly select a different film.");
-        } else {
-            amount = ((Film.getRentalRate()) * (Film.getRentalDuration()));
-            System.out.println("Total amount is: "+amount);
-        }
-        return amount;
-    }
-
-    public int payReplacement(int amount) {
-        System.out.println("Total amount is: "+Film.getReplacementCost());
-        amount = Film.getReplacementCost();
-        return amount;
     }
 }

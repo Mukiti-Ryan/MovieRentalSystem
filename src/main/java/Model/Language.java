@@ -16,6 +16,10 @@ public class Language {
         return languageId;
     }
 
+    public static void setLanguageId(int languageId) {
+        Language.languageId = languageId;
+    }
+
     public String getLanguageName() {
         return languageName;
     }

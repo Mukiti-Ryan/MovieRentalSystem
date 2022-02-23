@@ -16,6 +16,10 @@ public class Category {
         return categoryId;
     }
 
+    public static void setCategoryId(int categoryId) {
+        Category.categoryId = categoryId;
+    }
+
     public String getNameOfCategory() {
         return nameOfCategory;
     }

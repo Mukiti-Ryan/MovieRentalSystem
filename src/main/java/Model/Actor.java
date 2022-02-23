@@ -8,14 +8,12 @@ public class Actor {
     private String lastName;
     private Timestamp lastUpdate;
 
-    public Actor(String firstName, String lastName, Timestamp lastUpdate) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.lastUpdate = lastUpdate;
-    }
-
     public static int getActorId() {
         return actorId;
+    }
+
+    public static void setActorId(int actorId) {
+        Actor.actorId = actorId;
     }
 
     public String getFirstName() {

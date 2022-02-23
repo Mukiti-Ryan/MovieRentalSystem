@@ -2,14 +2,12 @@ package Model;
 
 import java.sql.*;
 
-import static Connection.ConnectionDb.connect;
-
 public class Inventory {
-    public static int film_Id;
-    private static int inventoryId;
+    private int film_Id;
+    private int inventoryId;
     private Timestamp lastUpdate;
 
-    public static int getFilm_Id() {
+    public int getFilm_Id() {
         return film_Id;
     }
 
@@ -17,12 +15,12 @@ public class Inventory {
         this.film_Id = film_Id;
     }
 
-    public static int getInventoryId() {
+    public int getInventoryId() {
         return inventoryId;
     }
 
-    public static void setInventoryId(int inventoryId) {
-        Inventory.inventoryId = inventoryId;
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
     }
 
     public Timestamp getLastUpdate() {
@@ -33,32 +31,4 @@ public class Inventory {
         this.lastUpdate = lastUpdate;
     }
 
-    public static Inventory extractInventoryFromResultSet(ResultSet rs) {
-        Inventory inventory = new Inventory();
-        try {
-            inventory.setInventoryId(rs.getInt("inventoryId"));
-            inventory.setFilm_Id(rs.getInt("customerId"));
-            inventory.setLastUpdate(rs.getTimestamp("lastUpdate"));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return inventory;
-    }
-
-    public static Inventory viewInventoryDetails() {
-        Inventory inventory = new Inventory();
-        try{
-            Connection conn = connect();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM inventory WHERE film_Id=?");
-            ps.setInt(1, Inventory.film_Id);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return extractInventoryFromResultSet(rs);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return inventory;
-    }
 }

@@ -8,14 +8,12 @@ public class City {
     private String nameOfCity;
     private Timestamp lastUpdate;
 
-    public City(int country_Id, String nameOfCity, Timestamp lastUpdate) {
-        this.country_Id = Country.getCountryId();
-        this.nameOfCity = nameOfCity;
-        this.lastUpdate = lastUpdate;
-    }
-
     public static int getCityId() {
         return cityId;
+    }
+
+    public static void setCityId(int cityId) {
+        City.cityId = cityId;
     }
 
     public String getNameOfCity() {
@@ -32,5 +30,13 @@ public class City {
 
     public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public int getCountry_Id() {
+        return country_Id;
+    }
+
+    public void setCountry_Id(int country_Id) {
+        this.country_Id = Country.getCountryId();
     }
 }

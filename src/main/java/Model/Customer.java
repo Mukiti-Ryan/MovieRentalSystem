@@ -1,19 +1,45 @@
 package Model;
 
 import java.sql.*;
-
-import static Connection.ConnectionDb.connect;
+import java.util.Scanner;
 
 public class Customer {
+    static Scanner sc = new Scanner(System.in);
     private int address_Id;
-    private static int customerId;
+    private int customerId;
     private String firstName;
     private String lastName;
-    public static String email;
+    private String email;
+    private boolean active;
     private Timestamp dateCreated;
     private Timestamp lastUpdate;
 
-    public static int getCustomerId() {
+    public Customer(int address_Id, int customerId, String firstName, String lastName, String email, Timestamp dateCreated, Timestamp lastUpdate) {
+        this.address_Id = address_Id;
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.dateCreated = dateCreated;
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Customer() {
+    }
+
+    public Customer(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getCustomerId() {
         return customerId;
     }
 
@@ -61,33 +87,11 @@ public class Customer {
         this.lastUpdate = lastUpdate;
     }
 
-    public static Customer extractCustomerFromResultSet(ResultSet rs) {
-        Customer customer = new Customer();
-        try {
-            customer.setCustomerId(rs.getInt("customerId"));
-            customer.setFirstName(rs.getString("firstName"));
-            customer.setLastName(rs.getString("lastName"));
-            customer.setEmail(rs.getString("email"));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return customer;
+    public int getAddress_Id() {
+        return address_Id;
     }
 
-    public static Customer viewCustomerDetails() {
-        Customer customer = new Customer();
-        try{
-            Connection conn = connect();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM customer WHERE email=?");
-            ps.setString(1, Customer.email);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()){
-                return extractCustomerFromResultSet(rs);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return customer;
+    public void setAddress_Id(int address_Id) {
+        this.address_Id = Address.getAddressId();
     }
 }

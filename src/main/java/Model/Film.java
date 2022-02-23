@@ -2,35 +2,76 @@ package Model;
 
 import java.sql.*;
 
-import static Connection.ConnectionDb.connect;
-
 public class Film {
     private int language_Id;
-    public static int filmId;
-    private static String title;
-    private static int rentalDuration;
-    private static int rentalRate;
+    public int filmId;
+    private String title;
+    private int rentalDuration;
+    private int rentalRate;
     private String description;
     private int releaseYear;
     private int length;
-    private static int replacementCost;
+    private int replacementCost;
     private int rating;
     private Timestamp lastUpdate;
     private String specialFeatures;
     private String fullText;
+    private int amount;
 
-    public static int getFilmId() {
+    public Film() {
+    }
+
+    public int FilmPayment() {
+        amount = getRentalDuration() * getRentalRate();
+        return amount;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public int getFilmId() {
         return filmId;
     }
 
-    public void setFilmId() {this.filmId = filmId;}
+    public void setFilmId(int filmId) {
+        this.filmId = filmId;
+    }
 
-    public static String getTitle() {
+    public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getRentalDuration() {
+        return rentalDuration;
+    }
+
+    public void setRentalDuration(int rentalDuration) {
+        this.rentalDuration = rentalDuration;
+    }
+
+    public int getRentalRate() {
+        return rentalRate;
+    }
+
+    public void setRentalRate(int rentalRate) {
+        this.rentalRate = rentalRate;
+    }
+
+    public int getReplacementCost() {
+        return replacementCost;
+    }
+
+    public void setReplacementCost(int replacementCost) {
+        this.replacementCost = replacementCost;
     }
 
     public String getDescription() {
@@ -49,36 +90,12 @@ public class Film {
         this.releaseYear = releaseYear;
     }
 
-    public static int getRentalDuration() {
-        return rentalDuration;
-    }
-
-    public void setRentalDuration(int rentalDuration) {
-        this.rentalDuration = rentalDuration;
-    }
-
-    public static int getRentalRate() {
-        return rentalRate;
-    }
-
-    public void setRentalRate(int rentalRate) {
-        this.rentalRate = rentalRate;
-    }
-
     public int getLength() {
         return length;
     }
 
     public void setLength(int length) {
         this.length = length;
-    }
-
-    public static int getReplacementCost() {
-        return replacementCost;
-    }
-
-    public void setReplacementCost(int replacementCost) {
-        this.replacementCost = replacementCost;
     }
 
     public int getRating() {
@@ -113,39 +130,11 @@ public class Film {
         this.fullText = fullText;
     }
 
-    public static Film viewFilmDetails() {
-        Film film = new Film();
-        try{
-            Connection conn = connect();
-            PreparedStatement ps = conn.prepareStatement("SELECT FROM film WHERE filmId=?");
-            ps.setInt(1, Film.filmId);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return extractFilmFromResultSet(rs);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return film;
+    public int getLanguage_Id() {
+        return language_Id;
     }
 
-    public static Film extractFilmFromResultSet(ResultSet rs) {
-        Film film = new Film();
-        try {
-            film.setTitle(rs.getString("title"));
-            film.setDescription(rs.getString("description"));
-            film.setReleaseYear(rs.getInt("releaseYear"));
-            film.setRentalDuration(rs.getInt("rentalDuration"));
-            film.setRentalRate(rs.getInt("rentalRate"));
-            film.setLength(rs.getInt("length"));
-            film.setReplacementCost(rs.getInt("replacementCost"));
-            film.setRating(rs.getInt("rating"));
-            film.setSpecialFeatures(rs.getString("specialFeatures"));
-            film.setFullText(rs.getString("fullTxt"));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return film;
+    public void setLanguage_Id(int language_Id) {
+        this.language_Id = Language.getLanguageId();
     }
 }

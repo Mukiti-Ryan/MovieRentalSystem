@@ -11,16 +11,12 @@ public class Address {
     private String phoneNumber;
     private Timestamp lastUpdate;
 
-    public Address(int city_Id, String address, int district, String postalCode, String phoneNumber, Timestamp lastUpdate) {
-        this.city_Id = City.getCityId();
-        this.address = address;
-        this.district = district;
-        this.postalCode = postalCode;
-        this.phoneNumber = phoneNumber;
-        this.lastUpdate = lastUpdate;
-    }
     public static int getAddressId() {
         return addressId;
+    }
+
+    public static void setAddressId(int addressId) {
+        Address.addressId = addressId;
     }
 
     public String getAddress() {
@@ -61,5 +57,13 @@ public class Address {
 
     public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public int getCity_Id() {
+        return city_Id;
+    }
+
+    public void setCity_Id(int city_Id) {
+        this.city_Id = City.getCityId();
     }
 }
