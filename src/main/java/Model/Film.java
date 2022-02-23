@@ -1,42 +1,31 @@
 package Model;
 
-import java.sql.Timestamp;
+import java.sql.*;
+
+import static Connection.ConnectionDb.connect;
 
 public class Film {
     private int language_Id;
     public static int filmId;
-    private String title;
+    private static String title;
+    private static int rentalDuration;
+    private static int rentalRate;
     private String description;
     private int releaseYear;
-    private int rentalDuration;
-    private int rentalRate;
     private int length;
-    private int replacementCost;
+    private static int replacementCost;
     private int rating;
     private Timestamp lastUpdate;
     private String specialFeatures;
     private String fullText;
 
-    public Film(int language_Id, String title, String description, int releaseYear, int rentalDuration, int rentalRate, int length, int replacementCost, int rating, Timestamp lastUpdate, String specialFeatures, String fullText) {
-        this.language_Id = Language.getLanguageId();
-        this.title = title;
-        this.description = description;
-        this.releaseYear = releaseYear;
-        this.rentalDuration = rentalDuration;
-        this.rentalRate = rentalRate;
-        this.length = length;
-        this.replacementCost = replacementCost;
-        this.rating = rating;
-        this.lastUpdate = lastUpdate;
-        this.specialFeatures = specialFeatures;
-        this.fullText = fullText;
-    }
-
     public static int getFilmId() {
         return filmId;
     }
 
-    public String getTitle() {
+    public void setFilmId() {this.filmId = filmId;}
+
+    public static String getTitle() {
         return title;
     }
 
@@ -60,7 +49,7 @@ public class Film {
         this.releaseYear = releaseYear;
     }
 
-    public int getRentalDuration() {
+    public static int getRentalDuration() {
         return rentalDuration;
     }
 
@@ -68,7 +57,7 @@ public class Film {
         this.rentalDuration = rentalDuration;
     }
 
-    public int getRentalRate() {
+    public static int getRentalRate() {
         return rentalRate;
     }
 
@@ -84,7 +73,7 @@ public class Film {
         this.length = length;
     }
 
-    public int getReplacementCost() {
+    public static int getReplacementCost() {
         return replacementCost;
     }
 
@@ -122,5 +111,41 @@ public class Film {
 
     public void setFullText(String fullText) {
         this.fullText = fullText;
+    }
+
+    public static Film viewFilmDetails() {
+        Film film = new Film();
+        try{
+            Connection conn = connect();
+            PreparedStatement ps = conn.prepareStatement("SELECT FROM film WHERE filmId=?");
+            ps.setInt(1, Film.filmId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return extractFilmFromResultSet(rs);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return film;
+    }
+
+    public static Film extractFilmFromResultSet(ResultSet rs) {
+        Film film = new Film();
+        try {
+            film.setTitle(rs.getString("title"));
+            film.setDescription(rs.getString("description"));
+            film.setReleaseYear(rs.getInt("releaseYear"));
+            film.setRentalDuration(rs.getInt("rentalDuration"));
+            film.setRentalRate(rs.getInt("rentalRate"));
+            film.setLength(rs.getInt("length"));
+            film.setReplacementCost(rs.getInt("replacementCost"));
+            film.setRating(rs.getInt("rating"));
+            film.setSpecialFeatures(rs.getString("specialFeatures"));
+            film.setFullText(rs.getString("fullTxt"));
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return film;
     }
 }
