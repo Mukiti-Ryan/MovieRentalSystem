@@ -7,8 +7,6 @@ import Model.Staff;
 import Services.Account;
 import Services.Payment;
 import Services.Rental;
-
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class MainApp {
@@ -27,6 +25,7 @@ public class MainApp {
         } else if (staff.isActive()) {
             System.out.println("Staff account is inactive");
         }
+        System.out.println(" ");
         System.out.println("The user "+staff.getUserName()+" is authenticated!!!");
         System.out.println(" ");
         displayMainMenu();
@@ -38,8 +37,14 @@ public class MainApp {
                         if (customer.getEmail() == null) {
                             throw new IllegalStateException("No customer with provided email is found!");
                         } else if (!customer.isActive()) {
-                            throw new IllegalStateException("Customer account is inactive!");
+                            throw new IllegalStateException("Customer account "+customer.getFirstName()+" "+customer.getLastName()+ " is inactive!");
+                        } else
+                        System.out.println("Would you like to reactivate it?? [1 for yes/2 for no]");
+                        int reactivateOption = sc.nextInt();
+                        if (reactivateOption == 1){
+                            account.reactivateCustomer();
                         }
+
                         System.out.println("Customer account "+customer.getFirstName()+" "+customer.getLastName() + " is active");
                     } catch (Exception e){
                         System.out.println(e.getMessage());
@@ -54,14 +59,14 @@ public class MainApp {
                     break;
                 case 3:
                     Film film = account.viewFilmDetails();
-                    System.out.println("The film details are as follows");
-                    System.out.println("Film Title: "+film.getTitle());
-                    System.out.println("Film Release Year: "+film.getReleaseYear());
-                    System.out.println("Film Rental Duration: "+film.getRentalDuration());
-                    System.out.println("Film Rental Rate: "+film.getRentalRate());
-                    System.out.println("Film Length: "+film.getLength());
-                    System.out.println("Film Replacement Cost: "+film.getReplacementCost());
-                    System.out.println("Film Rating: "+film.getRating());
+//                    System.out.println("The film details are as follows");
+//                    System.out.println("Film Title: "+film.getTitle());
+//                    System.out.println("Film Release Year: "+film.getReleaseYear());
+//                    System.out.println("Film Rental Duration: "+film.getRentalDuration());
+//                    System.out.println("Film Rental Rate: "+film.getRentalRate());
+//                    System.out.println("Film Length: "+film.getLength());
+//                    System.out.println("Film Replacement Cost: "+film.getReplacementCost());
+//                    System.out.println("Film Rating: "+film.getRating());
                     break;
                 case 4:
                     Rental rental = account.viewRentalDetails();
@@ -99,6 +104,7 @@ public class MainApp {
         System.out.println("Press 4 to view rental details");
         System.out.println("Press 5 to view payment details");
         System.out.println("Press 6 to rent a film");
+        System.out.println(" ");
 //        System.out.println("Press 7 to logout");
         selectedOption = sc.nextInt();
     }

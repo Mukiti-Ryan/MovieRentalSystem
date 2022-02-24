@@ -17,13 +17,22 @@ public class Film {
     private String specialFeatures;
     private String fullText;
     private int amount;
-
     public Film() {
     }
 
     public int FilmPayment() {
         amount = getRentalDuration() * getRentalRate();
         return amount;
+    }
+
+    public Film(String title, int rentalDuration, int rentalRate, int releaseYear, int length, int replacementCost, int rating) {
+        this.title = title;
+        this.rentalDuration = rentalDuration;
+        this.rentalRate = rentalRate;
+        this.releaseYear = releaseYear;
+        this.length = length;
+        this.replacementCost = replacementCost;
+        this.rating = rating;
     }
 
     public int getAmount() {

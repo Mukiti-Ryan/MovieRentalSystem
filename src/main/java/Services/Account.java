@@ -54,8 +54,62 @@ public class Account{
         return staff;
     }
 
+    public Customer reactivateCustomer() {
+        System.out.println("Enter the email of the customer: ");
+        System.out.println(" ");
+        String email = sc.next();
+        try{
+            Connection conn = connect();
+            PreparedStatement ps = conn.prepareStatement("UPDATE customer SET ACTIVE = 1 WHERE email=?");
+            ps.setString(1, email);
+            ps.executeUpdate();
+
+            return extractCustomerFromResultSet();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public Customer deactivateCustomer() {
+        System.out.println("Enter the email of the customer: ");
+        System.out.println(" ");
+        String email = sc.next();
+        try{
+            Connection conn = connect();
+            PreparedStatement ps = conn.prepareStatement("UPDATE customer SET ACTIVE = 0 WHERE email=?");
+            ps.setString(1, email);
+            ps.executeUpdate();
+
+            return extractCustomerFromResultSet();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    private Customer extractCustomerFromResultSet() {
+        System.out.println("Enter the email of the customer: ");
+        System.out.println(" ");
+        String email = sc.next();
+        try{
+            Connection conn = connect();
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM customer WHERE email=?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                return extractCustomerFromResultSet(rs);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     public Customer viewCustomerDetails() {
         System.out.println("Enter the email of the customer: ");
+        System.out.println(" ");
         String email = sc.next();
         try{
             Connection conn = connect();
@@ -88,6 +142,7 @@ public class Account{
 
     public Inventory viewInventoryDetails() {
         System.out.println("Enter the inventory id of the film");
+        System.out.println(" ");
         int inventoryId = sc.nextInt();
         try{
             Connection conn = connect();
@@ -117,19 +172,170 @@ public class Account{
     }
 
     public Film viewFilmDetails() {
-        System.out.println("Enter the filmId of the film: ");
-        int filmId = sc.nextInt();
-        try{
-            Connection conn = connect();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM film WHERE filmId=?");
-            ps.setInt(1, filmId);
-            ResultSet rs = ps.executeQuery();
+        Film film = new Film();
+        System.out.println("Choose an option below: ");
+        System.out.println("Press 1 to search for film by filmId: ");
+        System.out.println("Press 2 to search for film by title: ");
+        System.out.println("Press 3 to search for film by year of release: ");
+        System.out.println("Press 4 to search for film by rating: ");
+        System.out.println("Press 5 to search for film by length: ");
+        System.out.println("Press 6 to search film by category");
+        System.out.println(" ");
+        int filmOption = sc.nextInt();
 
-            if (rs.next()) {
-                return extractFilmFromResultSet(rs);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        switch (filmOption) {
+            case 1:
+                System.out.println("Enter the film id: ");
+                System.out.println(" ");
+                int filmId = sc.nextInt();
+                try {
+                    Connection conn = connect();
+                    PreparedStatement ps = conn.prepareStatement("SELECT * FROM film WHERE filmId=?");
+                    ps.setInt(1, filmId);
+                    ResultSet rs = ps.executeQuery();
+
+                    if (rs.next()){
+                        return extractFilmFromResultSet(rs);
+                    }
+                } catch (SQLException ex){
+                    ex.printStackTrace();
+                }
+                break;
+            case 2:
+                System.out.println("Enter the title of the film: ");
+                System.out.println(" ");
+                String title = sc.next();
+                try {
+                    Connection conn = connect();
+                    PreparedStatement ps = conn.prepareStatement("SELECT * FROM film WHERE title=?");
+                    ps.setString(1, title);
+                    ResultSet rs = ps.executeQuery();
+
+                    if (rs.next()){
+                        return extractFilmFromResultSet(rs);
+                    }
+                } catch (SQLException ex){
+                    ex.printStackTrace();
+                }
+                break;
+            case 3:
+                System.out.println("Enter the year of release of the film: ");
+                System.out.println(" ");
+                int releaseYear = sc.nextInt();
+                try {
+                    Connection conn = connect();
+                    PreparedStatement ps = conn.prepareStatement("SELECT * FROM film WHERE releaseYear=?");
+                    ps.setInt(1, releaseYear);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()){
+                        film.setTitle(rs.getString("title"));
+                        film.setReleaseYear(rs.getInt("releaseYear"));
+                        film.setRentalDuration(rs.getInt("rentalDuration"));
+                        film.setRentalRate(rs.getInt("rentalRate"));
+                        film.setLength(rs.getInt("length"));
+                        film.setReplacementCost(rs.getInt("replacementCost"));
+                        film.setRating(rs.getInt("rating"));
+                        System.out.println("The film details are as follows");
+                        System.out.println("Film Title: "+film.getTitle());
+                        System.out.println("Film Release Year: "+film.getReleaseYear());
+                        System.out.println("Film Rental Duration: "+film.getRentalDuration());
+                        System.out.println("Film Rental Rate: "+film.getRentalRate());
+                        System.out.println("Film Length: "+film.getLength());
+                        System.out.println("Film Replacement Cost: "+film.getReplacementCost());
+                        System.out.println("Film Rating: "+film.getRating());
+                    }
+                } catch (SQLException ex){
+                    ex.printStackTrace();
+                }
+                break;
+            case 4:
+                System.out.println("Enter the rating of the film: ");
+                System.out.println(" ");
+                int rating = sc.nextInt();
+                try {
+                    Connection conn = connect();
+                    PreparedStatement ps = conn.prepareStatement("SELECT * FROM film WHERE rating=?");
+                    ps.setInt(1, rating);
+                    ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()){
+                        film.setTitle(rs.getString("title"));
+                        film.setReleaseYear(rs.getInt("releaseYear"));
+                        film.setRentalDuration(rs.getInt("rentalDuration"));
+                        film.setRentalRate(rs.getInt("rentalRate"));
+                        film.setLength(rs.getInt("length"));
+                        film.setReplacementCost(rs.getInt("replacementCost"));
+                        film.setRating(rs.getInt("rating"));
+                        System.out.println("The film details are as follows");
+                        System.out.println("Film Title: "+film.getTitle());
+                        System.out.println("Film Release Year: "+film.getReleaseYear());
+                        System.out.println("Film Rental Duration: "+film.getRentalDuration());
+                        System.out.println("Film Rental Rate: "+film.getRentalRate());
+                        System.out.println("Film Length: "+film.getLength());
+                        System.out.println("Film Replacement Cost: "+film.getReplacementCost());
+                        System.out.println("Film Rating: "+film.getRating());;
+                    }
+                } catch (SQLException ex){
+                    ex.printStackTrace();
+                }
+                break;
+            case 5:
+                System.out.println("Enter the length of the film: ");
+                System.out.println(" ");
+                int length = sc.nextInt();
+                try {
+                    Connection conn = connect();
+                    PreparedStatement ps = conn.prepareStatement("SELECT * FROM film WHERE length=?");
+                    ps.setInt(1, length);
+                    ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()){
+                        film.setTitle(rs.getString("title"));
+                        film.setReleaseYear(rs.getInt("releaseYear"));
+                        film.setRentalDuration(rs.getInt("rentalDuration"));
+                        film.setRentalRate(rs.getInt("rentalRate"));
+                        film.setLength(rs.getInt("length"));
+                        film.setReplacementCost(rs.getInt("replacementCost"));
+                        film.setRating(rs.getInt("rating"));
+                        System.out.println("The film details are as follows");
+                        System.out.println("Film Title: "+film.getTitle());
+                        System.out.println("Film Release Year: "+film.getReleaseYear());
+                        System.out.println("Film Rental Duration: "+film.getRentalDuration());
+                        System.out.println("Film Rental Rate: "+film.getRentalRate());
+                        System.out.println("Film Length: "+film.getLength());
+                        System.out.println("Film Replacement Cost: "+film.getReplacementCost());
+                        System.out.println("Film Rating: "+film.getRating());;
+                    }
+                } catch (SQLException ex){
+                    ex.printStackTrace();
+                }
+                break;
+            case 6:
+                System.out.println("Enter the category of the film: ");
+                System.out.println(" ");
+                String nameOfCategory = sc.next();
+                try {
+                    Connection conn = connect();
+                    PreparedStatement ps = conn.prepareStatement("SELECT * FROM category WHERE nameOfCategory=?");
+                    ps.setString(1, nameOfCategory);
+                    ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                        film.setTitle(rs.getString("title"));
+                        film.setReleaseYear(rs.getInt("releaseYear"));
+                        film.setRentalDuration(rs.getInt("rentalDuration"));
+                        film.setRentalRate(rs.getInt("rentalRate"));
+                        film.setLength(rs.getInt("length"));
+                        film.setReplacementCost(rs.getInt("replacementCost"));
+                        film.setRating(rs.getInt("rating"));
+                    }
+                } catch (SQLException ex){
+                    ex.printStackTrace();
+                }
+                break;
+            default:
+                System.out.println("Film could not be found!!! Try again.");
+                break;
         }
         return null;
     }
@@ -152,6 +358,7 @@ public class Account{
 
     public Rental viewRentalDetails() {
         System.out.println("Enter the inventoryId: ");
+        System.out.println(" ");
         int inventory_Id = sc.nextInt();
         try{
             Connection conn = connect();
@@ -185,6 +392,7 @@ public class Account{
 
     public Payment viewPaymentDetails() {
         System.out.println("Enter the amount paid by the customer: ");
+        System.out.println(" ");
         double amount = sc.nextDouble();
         try{
             Connection conn = connect();
