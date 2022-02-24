@@ -12,13 +12,11 @@ import java.util.Scanner;
 public class MainApp {
     static int selectedOption;
     static Scanner sc = new Scanner(System.in);
-    static int tOption;
 
     public static void main(String[] args) {
         System.out.println("*** MOVIE RENTAL SYSTEM ***");
 
         Account account = new Account();
-//        if (!account.isloggedin()){}
         Staff staff = account.login();
         if (staff.getUserName() == null) {
             System.out.println("No staff with provided username is found");
@@ -59,14 +57,16 @@ public class MainApp {
                     break;
                 case 3:
                     Film film = account.viewFilmDetails();
-//                    System.out.println("The film details are as follows");
-//                    System.out.println("Film Title: "+film.getTitle());
-//                    System.out.println("Film Release Year: "+film.getReleaseYear());
-//                    System.out.println("Film Rental Duration: "+film.getRentalDuration());
-//                    System.out.println("Film Rental Rate: "+film.getRentalRate());
-//                    System.out.println("Film Length: "+film.getLength());
-//                    System.out.println("Film Replacement Cost: "+film.getReplacementCost());
-//                    System.out.println("Film Rating: "+film.getRating());
+                    if (Account.filmOption == 1 || Account.filmOption == 2) {
+                        System.out.println("The film details are as follows");
+                        System.out.println("Film Title: "+film.getTitle());
+                        System.out.println("Film Release Year: "+film.getReleaseYear());
+                        System.out.println("Film Rental Duration: "+film.getRentalDuration());
+                        System.out.println("Film Rental Rate: "+film.getRentalRate());
+                        System.out.println("Film Length: "+film.getLength());
+                        System.out.println("Film Replacement Cost: "+film.getReplacementCost());
+                        System.out.println("Film Rating: "+film.getRating());
+                    }
                     break;
                 case 4:
                     Rental rental = account.viewRentalDetails();
@@ -86,8 +86,6 @@ public class MainApp {
                     System.out.println("The film to be rented is: "+filmRental.getTitle());
                     System.out.println("The total amount is: "+filmRental.FilmPayment());
                     break;
-//                case 7:
-//                    break;
                 default:
                     System.out.println("Transaction has ended");
                     System.out.println("Thank you for using Visual Movie Rental System");
@@ -105,8 +103,6 @@ public class MainApp {
         System.out.println("Press 5 to view payment details");
         System.out.println("Press 6 to rent a film");
         System.out.println(" ");
-//        System.out.println("Press 7 to logout");
         selectedOption = sc.nextInt();
     }
-
 }

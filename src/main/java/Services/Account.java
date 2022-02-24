@@ -1,20 +1,16 @@
 package Services;
 
-import Model.Customer;
-import Model.Film;
-import Model.Inventory;
-import Model.Staff;
+import Model.*;
+
 import java.sql.*;
 import java.util.Scanner;
 import static Connection.ConnectionDb.connect;
 
 public class Account{
     static Scanner sc = new Scanner(System.in);
+    public static int filmOption;
 
     public Staff login() {
-//        if (isloggedin()) {
-//            System.out.println(Staff.getUserName()+" is currently logged in.");
-//        }
         System.out.println("Please enter your username and password to login.");
         System.out.println("Enter your username");
         String userName = sc.next();
@@ -173,15 +169,7 @@ public class Account{
 
     public Film viewFilmDetails() {
         Film film = new Film();
-        System.out.println("Choose an option below: ");
-        System.out.println("Press 1 to search for film by filmId: ");
-        System.out.println("Press 2 to search for film by title: ");
-        System.out.println("Press 3 to search for film by year of release: ");
-        System.out.println("Press 4 to search for film by rating: ");
-        System.out.println("Press 5 to search for film by length: ");
-        System.out.println("Press 6 to search film by category");
-        System.out.println(" ");
-        int filmOption = sc.nextInt();
+        displayFilmMenu();
 
         switch (filmOption) {
             case 1:
@@ -235,6 +223,7 @@ public class Account{
                         film.setLength(rs.getInt("length"));
                         film.setReplacementCost(rs.getInt("replacementCost"));
                         film.setRating(rs.getInt("rating"));
+
                         System.out.println("The film details are as follows");
                         System.out.println("Film Title: "+film.getTitle());
                         System.out.println("Film Release Year: "+film.getReleaseYear());
@@ -266,6 +255,7 @@ public class Account{
                         film.setLength(rs.getInt("length"));
                         film.setReplacementCost(rs.getInt("replacementCost"));
                         film.setRating(rs.getInt("rating"));
+
                         System.out.println("The film details are as follows");
                         System.out.println("Film Title: "+film.getTitle());
                         System.out.println("Film Release Year: "+film.getReleaseYear());
@@ -297,6 +287,7 @@ public class Account{
                         film.setLength(rs.getInt("length"));
                         film.setReplacementCost(rs.getInt("replacementCost"));
                         film.setRating(rs.getInt("rating"));
+
                         System.out.println("The film details are as follows");
                         System.out.println("Film Title: "+film.getTitle());
                         System.out.println("Film Release Year: "+film.getReleaseYear());
@@ -311,23 +302,71 @@ public class Account{
                 }
                 break;
             case 6:
+                Category category = new Category();
                 System.out.println("Enter the category of the film: ");
                 System.out.println(" ");
                 String nameOfCategory = sc.next();
                 try {
                     Connection conn = connect();
-                    PreparedStatement ps = conn.prepareStatement("SELECT * FROM category WHERE nameOfCategory=?");
+                    PreparedStatement ps = conn.prepareStatement("SELECT film.title, film.rating, film.rentalDuration, film.rentalRate ,category.nameofCategory\n" +
+                            "FROM ((film_category\n" +
+                            "INNER JOIN film ON film_category.film_Id = film.filmId)\n" +
+                            "INNER JOIN category ON film_category.category_Id = categoryId)\n" +
+                            "where nameOfCategory=?");
                     ps.setString(1, nameOfCategory);
                     ResultSet rs = ps.executeQuery();
 
                     while (rs.next()) {
                         film.setTitle(rs.getString("title"));
-                        film.setReleaseYear(rs.getInt("releaseYear"));
                         film.setRentalDuration(rs.getInt("rentalDuration"));
                         film.setRentalRate(rs.getInt("rentalRate"));
-                        film.setLength(rs.getInt("length"));
-                        film.setReplacementCost(rs.getInt("replacementCost"));
                         film.setRating(rs.getInt("rating"));
+                        category.setNameOfCategory(rs.getString("nameOfCategory"));
+
+                        System.out.println("The film details are as follows");
+                        System.out.println("Film Title: "+film.getTitle());
+                        System.out.println("Film Rental Duration: " +film.getRentalDuration());
+                        System.out.println("Film Rental Rate: "+film.getRentalRate());
+                        System.out.println("Film Rating: "+film.getRating());
+                        System.out.println("Film Category: "+category.getNameOfCategory());
+                    }
+                } catch (SQLException ex){
+                    ex.printStackTrace();
+                }
+                break;
+            case 7:
+                Actor actor = new Actor();
+                System.out.println("Enter the first name of the actor/actress: ");
+                String firstName = sc.next();
+                System.out.println("Enter the last name of the actor/actress: ");
+                String lastName = sc.next();
+                System.out.println(" ");
+                try {
+                    Connection conn = connect();
+                    PreparedStatement ps = conn.prepareStatement("SELECT film.title, film.rating, film.rentalDuration, film.rentalRate, actor.firstName, actor.lastName\n" +
+                            "FROM ((film_actor\n" +
+                            "INNER JOIN film ON film_actor.film_Id = film.filmId)\n" +
+                            "INNER JOIN actor ON film_actor.actor_Id = actorId)\n" +
+                            "where actor.firstName=? and actor.lastName=?");
+                    ps.setString(1, firstName);
+                    ps.setString(2, lastName);
+                    ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                        film.setTitle(rs.getString("title"));
+                        film.setRentalDuration(rs.getInt("rentalDuration"));
+                        film.setRentalRate(rs.getInt("rentalRate"));
+                        film.setRating(rs.getInt("rating"));
+                        actor.setFirstName(rs.getString("firstName"));
+                        actor.setLastName(rs.getString("lastName"));
+
+                        System.out.println("The film details are as follows");
+                        System.out.println("Film Title: "+film.getTitle());
+                        System.out.println("Film Rental Duration: " +film.getRentalDuration());
+                        System.out.println("Film Rental Rate: "+film.getRentalRate());
+                        System.out.println("Film Rating: "+film.getRating());
+                        System.out.println("Film Actor/Actress First Name: "+actor.getFirstName());
+                        System.out.println("Film Actor/Actress Last Name: "+actor.getLastName());
                     }
                 } catch (SQLException ex){
                     ex.printStackTrace();
@@ -423,8 +462,17 @@ public class Account{
         return payment;
     }
 
-//    public boolean isloggedin() {
-//        return session != null;
-//    }
+    public static void displayFilmMenu() {
+        System.out.println("Choose an option below: ");
+        System.out.println("Press 1 to search for film by filmId: ");
+        System.out.println("Press 2 to search for film by title: ");
+        System.out.println("Press 3 to search for film by year of release: ");
+        System.out.println("Press 4 to search for film by rating: ");
+        System.out.println("Press 5 to search for film by length: ");
+        System.out.println("Press 6 to search film by category");
+        System.out.println("Press 7 to search film by actor/actress name");
+        System.out.println(" ");
+        filmOption = sc.nextInt();
+    }
 }
 

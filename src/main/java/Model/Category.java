@@ -12,6 +12,9 @@ public class Category {
         this.lastUpdate = lastUpdate;
     }
 
+    public Category() {
+    }
+
     public static int getCategoryId() {
         return categoryId;
     }
