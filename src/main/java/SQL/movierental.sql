@@ -4,161 +4,162 @@ USE `movierental`;
 -- Table Structure for table `city`
 
 CREATE TABLE `city` (
-`cityId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`cityId` int(10) NOT NULL PRIMARY KEY,
 `country_Id` int(10) NOT NULL,
-`nameOfCity` varchar(50) NOT NULL,
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`nameOfCity` varchar(50),
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `country`
 
 CREATE TABLE `country` (
-`countryId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-`nameOfCountry` varchar(50) NOT NULL,
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`countryId` int(10) NOT NULL PRIMARY KEY,
+`nameOfCountry` varchar(50),
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `staff`
 
 CREATE TABLE `staff` (
-`staffId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`staffId` int(10) NOT NULL PRIMARY KEY ,
 `address_Id` int(10) NOT NULL,
 `store_Id` int(10) NOT NULL,
 `payment_Id` int(10) NOT NULL,
-`firstName` varchar(255) NOT NULL,
-`lastName` varchar(255) NOT NULL,
-`email` varchar(50) NOT NULL,
-`active` char(1) NOT NULL,
-`userName` varchar(16) NOT NULL,
-`password` varchar(40) NOT NULL,
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-`pictureUrl` varchar(16) NOT NULL
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`firstName` varchar(255),
+`lastName` varchar(255),
+`email` varchar(50),
+`active` char(1),
+`userName` varchar(16),
+`password` varchar(40),
+`lastUpdate` timestamp,
+`pictureUrl` varchar(1000)
+);
 
 
 -- Table structure for table `payment`
 
 CREATE TABLE `payment` (
-`paymentId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`paymentId` int(10) NOT NULL PRIMARY KEY,
 `rental_Id` int(10) NOT NULL,
 `customer_Id` int(10) NOT NULL,
 `staff_id` int(10) NOT NULL,
-`amount` numeric(19,0) NOT NULL,
-`paymentDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`amount` decimal(5,2),
+`paymentDate` timestamp
+);
 
 -- Table structure for table `rental`
 
 CREATE TABLE `rental` (
-`rentalId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`rentalId` int(10) NOT NULL PRIMARY KEY,
 `staff_Id` int(10) NOT NULL,
 `customer_Id` int(10) NOT NULL,
 `inventory_Id` int(10) NOT NULL,
-`rentalDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-`returnDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`rentalDate` timestamp,
+`returnDate` timestamp,
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `customer`
 
 CREATE TABLE `customer` (
-`customerId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`customerId` int(10) NOT NULL PRIMARY KEY,
 `address_Id` int(10) NOT NULL,
-`firstName` int(10),
-`lastName` int(10),
+`addressColumn` int(10) NOT NULL,
+`firstName` varchar(255),
+`lastName` varchar(255),
 `email` varchar(50),
 `active` char(1),
-`createDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`createDate` timestamp,
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `address`
 
 CREATE TABLE `address` (
-`addressId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`addressId` int(10) NOT NULL PRIMARY KEY,
 `city_Id` int(10) NOT NULL,
 `address` varchar(50),
 `address2` varchar(50),
 `district` int(20),
 `postalCode` varchar(10),
 `phoneNumber` varchar(20),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `actor`
 
 CREATE TABLE `actor` (
-`actorId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-`firstName` int(10),
-`lastName` varchar(50),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`actorId` int(10) NOT NULL PRIMARY KEY,
+`firstName` varchar(255),
+`lastName` varchar(255),
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `film_actor`
 
 CREATE TABLE `film_actor` (
-`film_Id` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-`actor_Id` int(10),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`film_Id` int(10) NOT NULL PRIMARY KEY,
+`actor_Id` int(10) NOT NULL,
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `film_category`
 
 CREATE TABLE `film_category` (
-`film_Id` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-`category_Id` int(10),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`film_Id` int(10) NOT NULL PRIMARY KEY,
+`category_Id` int(10) NOT NULL,
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `category`
 
 CREATE TABLE `category` (
-`categoryId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`categoryId` int(10) NOT NULL PRIMARY KEY,
 `nameOfCategory` varchar(25),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `language`
 
 CREATE TABLE `language` (
-`languageId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`languageId` int(10) NOT NULL PRIMARY KEY,
 `nameOfLanguage` varchar(20),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `inventory`
 
 CREATE TABLE `inventory` (
-`inventoryId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-`film_Id` int(10),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`inventoryId` int(10) NOT NULL PRIMARY KEY,
+`film_Id` int(10) NOT NULL,
+`lastUpdate` timestamp
+);
 
 -- Table structure for table `film`
 
 CREATE TABLE `film` (
-`filmId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`filmId` int(10) NOT NULL PRIMARY KEY,
 `language_Id` int(10) NOT NULL,
 `title` varchar(255),
 `description` varchar(255),
 `releaseYear` int(4),
 `rentalDuration` int(10),
-`rentalRate` numeric(19,0),
+`rentalRate` decimal(5,2),
 `length` int(2),
-`replacementCost` numeric(19,0),
+`replacementCost` decimal(4,2),
 `rating` int(10),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+`lastUpdate` timestamp,
 `specialFeatures` varchar(255),
 `fullTxt` varchar(255)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 -- Table structure for table `store`
 
 CREATE TABLE `store` (
-`storeId` int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`storeId` int(10) NOT NULL PRIMARY KEY,
 `address_Id` int(10),
-`lastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`lastUpdate` timestamp
+);
 
 -- Constraints for tables
 
@@ -208,6 +209,10 @@ COMMIT;
 
 ALTER TABLE `customer`
 	ADD CONSTRAINT FOREIGN KEY (`address_Id`) REFERENCES `address` (`addressId`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+ALTER TABLE `customer`
+	ADD CONSTRAINT FOREIGN KEY(`addressColumn`) REFERENCES `address` (`addressId`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 -- Constraints for table `inventory`
