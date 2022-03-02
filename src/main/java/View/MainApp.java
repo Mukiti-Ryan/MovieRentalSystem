@@ -35,14 +35,13 @@ public class MainApp {
                         if (customer.getEmail() == null) {
                             throw new IllegalStateException("No customer with provided email is found!");
                         } else if (!customer.isActive()) {
-                            throw new IllegalStateException("Customer account "+customer.getFirstName()+" "+customer.getLastName()+ " is inactive!");
-                        } else
-                        System.out.println("Would you like to reactivate it?? [1 for yes/2 for no]");
-                        int reactivateOption = sc.nextInt();
-                        if (reactivateOption == 1){
-                            account.reactivateCustomer();
+                            System.out.println("Customer account "+customer.getFirstName()+ " " +customer.getLastName()+ " is inactive!");
+                            System.out.println("Would you like to reactivate it?? [1 for yes/2 for no]");
+                            int reactivateOption = sc.nextInt();
+                            if (reactivateOption == 1){
+                                account.reactivateCustomer();
+                            }
                         }
-
                         System.out.println("Customer account "+customer.getFirstName()+" "+customer.getLastName() + " is active");
                     } catch (Exception e){
                         System.out.println(e.getMessage());
