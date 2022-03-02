@@ -1,7 +1,14 @@
 package Model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.sql.*;
 import java.util.Scanner;
+
+@Getter
+@Setter
+@NoArgsConstructor
 
 public class Customer {
     static Scanner sc = new Scanner(System.in);
@@ -22,76 +29,5 @@ public class Customer {
         this.email = email;
         this.dateCreated = dateCreated;
         this.lastUpdate = lastUpdate;
-    }
-
-    public Customer() {
-    }
-
-    public Customer(String email) {
-        this.email = email;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Timestamp getDateCreated() {
-        return dateCreated;
-    }
-
-    public Timestamp getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setCustomerId(int customerId){
-        this.customerId = customerId;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setDateCreated(Timestamp dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public void setLastUpdate(Timestamp lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public int getAddress_Id() {
-        return address_Id;
-    }
-
-    public void setAddress_Id(int address_Id) {
-        this.address_Id = Address.getAddressId();
     }
 }

@@ -1,7 +1,13 @@
 package Model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.sql.Timestamp;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class Language {
     private static int languageId;
     private String languageName;
@@ -9,30 +15,6 @@ public class Language {
 
     public Language(String languageName, Timestamp lastUpdate) {
         this.languageName = languageName;
-        this.lastUpdate = lastUpdate;
-    }
-
-    public static int getLanguageId() {
-        return languageId;
-    }
-
-    public static void setLanguageId(int languageId) {
-        Language.languageId = languageId;
-    }
-
-    public String getLanguageName() {
-        return languageName;
-    }
-
-    public void setLanguageName(String languageName) {
-        this.languageName = languageName;
-    }
-
-    public Timestamp getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 }

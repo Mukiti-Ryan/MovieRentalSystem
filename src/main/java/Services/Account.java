@@ -1,6 +1,7 @@
 package Services;
 
 import Model.*;
+import View.MainApp;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -84,26 +85,15 @@ public class Account{
         return null;
     }
 
-    private Customer extractCustomerFromResultSet() {
-        System.out.println("Enter the email of the customer: ");
-        System.out.println(" ");
-        String email = sc.next();
-        try{
-            Connection conn = connect();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM customer WHERE email=?");
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()){
-                return extractCustomerFromResultSet(rs);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+    public Customer extractCustomerFromResultSet() {
+        return getCustomer();
     }
 
     public Customer viewCustomerDetails() {
+        return getCustomer();
+    }
+
+    public Customer getCustomer() {
         System.out.println("Enter the email of the customer: ");
         System.out.println(" ");
         String email = sc.next();
@@ -216,22 +206,7 @@ public class Account{
                     ps.setInt(1, releaseYear);
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()){
-                        film.setTitle(rs.getString("title"));
-                        film.setReleaseYear(rs.getInt("releaseYear"));
-                        film.setRentalDuration(rs.getInt("rentalDuration"));
-                        film.setRentalRate(rs.getInt("rentalRate"));
-                        film.setLength(rs.getInt("length"));
-                        film.setReplacementCost(rs.getInt("replacementCost"));
-                        film.setRating(rs.getInt("rating"));
-
-                        System.out.println("The film details are as follows");
-                        System.out.println("Film Title: "+film.getTitle());
-                        System.out.println("Film Release Year: "+film.getReleaseYear());
-                        System.out.println("Film Rental Duration: "+film.getRentalDuration());
-                        System.out.println("Film Rental Rate: "+film.getRentalRate());
-                        System.out.println("Film Length: "+film.getLength());
-                        System.out.println("Film Replacement Cost: "+film.getReplacementCost());
-                        System.out.println("Film Rating: "+film.getRating());
+                        extractionFilmDetails(film, rs);
                     }
                 } catch (SQLException ex){
                     ex.printStackTrace();
@@ -248,22 +223,7 @@ public class Account{
                     ResultSet rs = ps.executeQuery();
 
                     while (rs.next()){
-                        film.setTitle(rs.getString("title"));
-                        film.setReleaseYear(rs.getInt("releaseYear"));
-                        film.setRentalDuration(rs.getInt("rentalDuration"));
-                        film.setRentalRate(rs.getInt("rentalRate"));
-                        film.setLength(rs.getInt("length"));
-                        film.setReplacementCost(rs.getInt("replacementCost"));
-                        film.setRating(rs.getInt("rating"));
-
-                        System.out.println("The film details are as follows");
-                        System.out.println("Film Title: "+film.getTitle());
-                        System.out.println("Film Release Year: "+film.getReleaseYear());
-                        System.out.println("Film Rental Duration: "+film.getRentalDuration());
-                        System.out.println("Film Rental Rate: "+film.getRentalRate());
-                        System.out.println("Film Length: "+film.getLength());
-                        System.out.println("Film Replacement Cost: "+film.getReplacementCost());
-                        System.out.println("Film Rating: "+film.getRating());;
+                        extractionFilmDetails(film, rs);
                     }
                 } catch (SQLException ex){
                     ex.printStackTrace();
@@ -280,22 +240,7 @@ public class Account{
                     ResultSet rs = ps.executeQuery();
 
                     while (rs.next()){
-                        film.setTitle(rs.getString("title"));
-                        film.setReleaseYear(rs.getInt("releaseYear"));
-                        film.setRentalDuration(rs.getInt("rentalDuration"));
-                        film.setRentalRate(rs.getInt("rentalRate"));
-                        film.setLength(rs.getInt("length"));
-                        film.setReplacementCost(rs.getInt("replacementCost"));
-                        film.setRating(rs.getInt("rating"));
-
-                        System.out.println("The film details are as follows");
-                        System.out.println("Film Title: "+film.getTitle());
-                        System.out.println("Film Release Year: "+film.getReleaseYear());
-                        System.out.println("Film Rental Duration: "+film.getRentalDuration());
-                        System.out.println("Film Rental Rate: "+film.getRentalRate());
-                        System.out.println("Film Length: "+film.getLength());
-                        System.out.println("Film Replacement Cost: "+film.getReplacementCost());
-                        System.out.println("Film Rating: "+film.getRating());;
+                        extractionFilmDetails(film, rs);
                     }
                 } catch (SQLException ex){
                     ex.printStackTrace();
@@ -379,20 +324,30 @@ public class Account{
         return null;
     }
 
+    public void extractionFilmDetails(Film film, ResultSet rs) throws SQLException {
+        extractFilmResultSet(rs, film);
+
+        MainApp.filmDetails(film);
+    }
+
     public Film extractFilmFromResultSet(ResultSet rs) {
         Film film = new Film();
         try {
-            film.setTitle(rs.getString("title"));
-            film.setReleaseYear(rs.getInt("releaseYear"));
-            film.setRentalDuration(rs.getInt("rentalDuration"));
-            film.setRentalRate(rs.getInt("rentalRate"));
-            film.setLength(rs.getInt("length"));
-            film.setReplacementCost(rs.getInt("replacementCost"));
-            film.setRating(rs.getInt("rating"));
+            extractFilmResultSet(rs, film);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return film;
+    }
+
+    public void extractFilmResultSet(ResultSet rs, Film film) throws SQLException {
+        film.setTitle(rs.getString("title"));
+        film.setReleaseYear(rs.getInt("releaseYear"));
+        film.setRentalDuration(rs.getInt("rentalDuration"));
+        film.setRentalRate(rs.getInt("rentalRate"));
+        film.setLength(rs.getInt("length"));
+        film.setReplacementCost(rs.getInt("replacementCost"));
+        film.setRating(rs.getInt("rating"));
     }
 
     public Rental viewRentalDetails() {

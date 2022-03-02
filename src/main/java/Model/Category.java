@@ -1,6 +1,13 @@
 package Model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.sql.Timestamp;
+
+@Getter
+@Setter
+@NoArgsConstructor
 
 public class Category {
     private static int categoryId;
@@ -9,33 +16,6 @@ public class Category {
 
     public Category(String nameOfCategory, Timestamp lastUpdate) {
         this.nameOfCategory = nameOfCategory;
-        this.lastUpdate = lastUpdate;
-    }
-
-    public Category() {
-    }
-
-    public static int getCategoryId() {
-        return categoryId;
-    }
-
-    public static void setCategoryId(int categoryId) {
-        Category.categoryId = categoryId;
-    }
-
-    public String getNameOfCategory() {
-        return nameOfCategory;
-    }
-
-    public void setNameOfCategory(String nameOfCategory) {
-        this.nameOfCategory = nameOfCategory;
-    }
-
-    public Timestamp getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 }

@@ -58,14 +58,7 @@ public class MainApp {
                 case 3:
                     Film film = account.viewFilmDetails();
                     if (Account.filmOption == 1 || Account.filmOption == 2) {
-                        System.out.println("The film details are as follows");
-                        System.out.println("Film Title: "+film.getTitle());
-                        System.out.println("Film Release Year: "+film.getReleaseYear());
-                        System.out.println("Film Rental Duration: "+film.getRentalDuration());
-                        System.out.println("Film Rental Rate: "+film.getRentalRate());
-                        System.out.println("Film Length: "+film.getLength());
-                        System.out.println("Film Replacement Cost: "+film.getReplacementCost());
-                        System.out.println("Film Rating: "+film.getRating());
+                        filmDetails(film);
                     }
                     break;
                 case 4:
@@ -93,6 +86,17 @@ public class MainApp {
                     break;
             }
         }
+
+    public static void filmDetails(Film film) {
+        System.out.println("The film details are as follows");
+        System.out.println("Film Title: "+film.getTitle());
+        System.out.println("Film Release Year: "+film.getReleaseYear());
+        System.out.println("Film Rental Duration: "+film.getRentalDuration());
+        System.out.println("Film Rental Rate: "+film.getRentalRate());
+        System.out.println("Film Length: "+film.getLength());
+        System.out.println("Film Replacement Cost: "+film.getReplacementCost());
+        System.out.println("Film Rating: "+film.getRating());
+    }
 
     public static void displayMainMenu() {
         System.out.println("Please select an option below");
